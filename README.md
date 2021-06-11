@@ -1,0 +1,2 @@
+# deploy-static-test
+test
