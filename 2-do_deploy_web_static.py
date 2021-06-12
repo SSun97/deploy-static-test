@@ -6,6 +6,8 @@ from datetime import datetime
 import os.path
 
 env.hosts = ['3.90.35.112', '3.94.146.3']
+
+
 def do_deploy(archive_path):
     """ Deploy an archive """
 
@@ -16,14 +18,21 @@ def do_deploy(archive_path):
         archiveNameWithoutExtension = archiveName[:-4]
 
         put(archive_path, '/tmp/' + archiveName)
-        run("mkdir -p /data/web_static/releases/" + archiveNameWithoutExtension)
-        run("tar -xzvf /tmp/" + archiveName + " -C " + "/data/web_static/releases/" + archiveNameWithoutExtension + " --strip-components=1")
+        run("mkdir -p /data/web_static/releases/" +
+            archiveNameWithoutExtension)
+        run("tar -xzvf /tmp/" +
+            archiveName +
+            " -C " +
+            "/data/web_static/releases/" +
+            archiveNameWithoutExtension +
+            " --strip-components=1")
         run("rm -f /tmp/" + archiveName)
         run("rm -f /data/web_static/current")
-        run("sudo ln -sf /data/web_static/releases/" + archiveNameWithoutExtension + " /data/web_static/current")
+        run("sudo ln -sf /data/web_static/releases/" +
+            archiveNameWithoutExtension + " /data/web_static/current")
 
         return True
-    except:
+    except BaseException:
         return False
 
 
@@ -39,5 +48,5 @@ def do_pack():
         local("tar -czvf " + tarArchivePath + " web_static")
 
         return tarArchivePath
-    except:
+    except BaseException:
         return None

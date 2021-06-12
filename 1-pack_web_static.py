@@ -4,6 +4,7 @@
 from fabric.api import local
 from datetime import datetime
 
+
 def do_pack():
     """ pack up our web_static"""
 
@@ -14,5 +15,5 @@ def do_pack():
         local("mkdir -p versions")
         local("tar -czvf " + tarArchivePath + " web_static")
         return tarArchivePath
-    except:
+    except BaseException:
         return None
